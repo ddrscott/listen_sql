@@ -3,10 +3,9 @@
 # Listens for any SQL file changes and executes them using the default PSQL
 # settings.
 
+require 'bundler/setup'
+require 'listen_sql'
 require 'listen'
-require 'shellwords'
-require 'coderay'
-load File.join(__dir__, 'exec_sql')
 
 def usage(message=nil)
   text = <<-TEXT
@@ -28,11 +27,13 @@ db_name = ARGV.shift || ENV['PGDATABASE'] || usage('DBNAME should be second argu
 
 listener = Listen.to(dir, only: /\.sql$/) do |modified, _|
   modified.each do |file|
-    exec_sql(db_name, file, color: true)
+    ListenSql.exec_sql(db_name, file, color: true)
   end
 end
 
 if $0 == __FILE__
   listener.start # not blocking
+  puts "Watching for changes to #{dir}"
+  puts "<CTRL-C> to quit"
   sleep
 end

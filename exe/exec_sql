@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'shellwords'
-require 'coderay'
+require 'bundler/setup'
+require 'listen_sql'
 
 def usage(message=nil)
   text = <<-TEXT
@@ -26,27 +26,9 @@ def usage(message=nil)
   puts text
 end
 
-def exec_sql(db_name, file, color: true)
-  puts "File: #{file}"
-  puts "Time: #{Time.now}"
-
-  # Show original SQL
-  puts "SQL: "
-  sql = File.read(file)
-  puts(color ? CodeRay.scan(sql, :sql).terminal : sql)
-
-  # Show Resultset
-  puts "Rows: "
-  puts `psql #{db_name} < #{Shellwords.escape file}`
-end
-
-def stop(message)
-
-end
-
 if $0 == __FILE__
   db_name = ARGV.shift || usage('DBNAME should be first argument or set PGDATABASE in ENV!')
   src = ARGV.shift || usage('SRC should be second argument!')
   no_color = ARGV.detect{|a| a == '--no-color'}
-  exec_sql(db_name, src, color: !no_color)
+  ListenSql.exec_sql(db_name, src, color: !no_color)
 end
