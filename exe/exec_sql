@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+
+require 'shellwords'
+require 'coderay'
+
+def usage(message=nil)
+  text = <<-TEXT
+  Usage
+  =====
+
+    exec_sql DBNAME SRC [--no-color]
+
+      DBNAME - database name to pass to `psql`
+
+      SRC - source SQL file to run.
+
+      --no-color - to disable ANSI escape codes
+  TEXT
+
+  if message
+    puts message
+    puts
+    puts text
+    exit(1)
+  end
+  puts text
+end
+
+def exec_sql(db_name, file, color: true)
+  puts "File: #{file}"
+  puts "Time: #{Time.now}"
+
+  # Show original SQL
+  puts "SQL: "
+  sql = File.read(file)
+  puts(color ? CodeRay.scan(sql, :sql).terminal : sql)
+
+  # Show Resultset
+  puts "Rows: "
+  puts `psql #{db_name} < #{Shellwords.escape file}`
+end
+
+def stop(message)
+
+end
+
+if $0 == __FILE__
+  db_name = ARGV.shift || usage('DBNAME should be first argument or set PGDATABASE in ENV!')
+  src = ARGV.shift || usage('SRC should be second argument!')
+  no_color = ARGV.detect{|a| a == '--no-color'}
+  exec_sql(db_name, src, color: !no_color)
+end

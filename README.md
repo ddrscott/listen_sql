@@ -1,8 +1,25 @@
-# ListenSql
+# Listen SQL
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/listen_sql`. To experiment with that code, run `bin/console` for an interactive prompt.
+Problems helper bin scripts to monitor SQL file changes and execute them using
+psql.
 
-TODO: Delete this and the text above, and describe your gem
+## Usage
+
+```sh
+listen_sql DIR DBNAME
+# DIR - directory contains SQL files
+# DBNAME - Postgres DB name to passed to `psql` command. 
+```
+
+`listen_sql` uses `exec_sql` to perform syntax highlighting of original SQL
+contents.
+
+```sh
+exec_sql SRC DBNAME [--no-color]
+# SRC - source file contain SQL
+# DBNAME - Postgres DB name to passed to `psql` command. 
+# [Optional] --no-color - to disable ANSI color codes.
+```
 
 ## Installation
 
@@ -14,15 +31,11 @@ gem 'listen_sql'
 
 And then execute:
 
-    $ bundle
+$ bundle
 
 Or install it yourself as:
 
-    $ gem install listen_sql
-
-## Usage
-
-TODO: Write usage instructions here
+$ gem install listen_sql
 
 ## Development
 
@@ -32,7 +45,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/listen_sql.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ddrscott/listen_sql.
 
 
 ## License
