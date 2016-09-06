@@ -3,6 +3,8 @@
 Problems helper bin scripts to monitor SQL file changes and execute them using
 psql.
 
+<img src='doc/listen_sql_demo.gif' alt="listen SQL demo"/>
+
 ## Usage
 
 ```sh
