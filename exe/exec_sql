@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'bundler/setup'
 require 'listen_sql'
+require 'coderay'
 
 def usage(message=nil)
   text = <<-TEXT
@@ -26,9 +26,7 @@ def usage(message=nil)
   puts text
 end
 
-if $0 == __FILE__
-  db_name = ARGV.shift || usage('DBNAME should be first argument or set PGDATABASE in ENV!')
-  src = ARGV.shift || usage('SRC should be second argument!')
-  no_color = ARGV.detect{|a| a == '--no-color'}
-  ListenSql.exec_sql(db_name, src, color: !no_color)
-end
+db_name = ARGV.shift || usage('DBNAME should be first argument or set PGDATABASE in ENV!')
+src = ARGV.shift || usage('SRC should be second argument!')
+no_color = ARGV.detect{|a| a == '--no-color'}
+ListenSql.exec_sql(db_name, src, color: !no_color)
