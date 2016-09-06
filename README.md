@@ -1,7 +1,6 @@
 # Listen SQL
 
-Problems helper bin scripts to monitor SQL file changes and execute them using
-psql.
+Helper scripts to monitor SQL file changes and execute them using psql.
 
 <img src='doc/listen_sql_demo.gif' alt="listen SQL demo"/>
 
