@@ -38,6 +38,14 @@ Or install it yourself as:
 
 $ gem install listen_sql
 
+### rbenv Users
+You'll need to link your bin files so gem executables are accessible in your
+shell. [rbenv rehash](https://github.com/rbenv/rbenv#rbenv-rehash)
+
+```sh
+rbenv rehash
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run
