@@ -17,6 +17,6 @@ module ListenSql
 
     # Show Resultset
     puts "Rows: "
-    puts `psql #{db_name} < #{Shellwords.escape file}`
+    system(%(psql #{db_name} < #{Shellwords.escape file}))
   end
 end
